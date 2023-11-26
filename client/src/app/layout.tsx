@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <Script src="https://github.com/Divyansh3021/web3-ad-marketplace/blob/master/Scripts/index.js"/>
+        <Script src="https://raw.githubusercontent.com/Divyansh3021/web3-ad-marketplace/master/Scripts/index.js"/>
       </head>
       <body className={inter.className}>
         <ThemeProvider

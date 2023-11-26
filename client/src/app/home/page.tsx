@@ -57,15 +57,12 @@ export default function MusicPage() {
                         <TabsTrigger value="music" className="relative">
                           Music
                         </TabsTrigger>
-                        <TabsTrigger value="podcasts">Podcasts</TabsTrigger>
-                        <TabsTrigger value="live" disabled>
-                          Live
-                        </TabsTrigger>
+                        
                       </TabsList>
                       <div className="ml-auto mr-4">
                         <Button>
                           <PlusCircledIcon className="mr-2 h-4 w-4" />
-                          Add music
+                          Add Cart
                         </Button>
                       </div>
                     </div>
@@ -76,7 +73,7 @@ export default function MusicPage() {
                       <div className="flex items-center justify-between">
                         <div className="space-y-1">
                           <h2 className="text-2xl font-semibold tracking-tight">
-                            Listen Now
+                            Explore Now
                           </h2>
                           <p className="text-sm text-muted-foreground">
                             Top picks for you. Updated daily.

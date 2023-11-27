@@ -1,7 +1,8 @@
+'use client'
 import { Metadata } from "next"
 import Image from "next/image"
 import { PlusCircledIcon } from "@radix-ui/react-icons"
-
+import Head from "next/head"
 import { Button } from "@/components/ui/button"
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 import { Separator } from "@/components/ui/separator"
@@ -18,16 +19,34 @@ import { PodcastEmptyPlaceholder } from "./components/podcast-empty-placeholder"
 import { Sidebar } from "./components/sidebar"
 import { listenNowAlbums, madeForYouAlbums } from "./data/albums"
 import { playlists } from "./data/playlists"
-
-export const metadata: Metadata = {
-  title: "Music App",
-  description: "Example music app using the components.",
-}
-
+import { useSearchParams, useRouter } from 'next/navigation'
+import * as Avatar from '@radix-ui/react-avatar';
+// export const metadata: Metadata = {
+//   title: "Music App",
+//   description: "Example music app using the components.",
+// }
+import { shortenHexAddress } from "../../../biconomyAuth/authDetails"
 export default function MusicPage() {
+  const searchParams = useSearchParams()
+
+  const search = searchParams.get('address')
+
+
+  // Concatenate the chunks with dots in between
+  let address;
+  if (search) {
+    address = shortenHexAddress(search, 4, 4);
+  }
+
+const router=useRouter();
+const photoURL="https://www.shutterstock.com/image-vector/square-maze-on-black-background-600w-509876767.jpg"
+
   return (
-    <>
+    <><Head>
+      <title>Music App</title>
+    </Head>
       <div className="md:hidden">
+
         <Image
           src="/examples/music-light.png"
           width={1280}
@@ -44,11 +63,11 @@ export default function MusicPage() {
         />
       </div>
       <div className="hidden md:block">
-        <Menu />
+        {/* <Menu /> */}
         <div className="border-t">
           <div className="bg-background">
             <div className="grid lg:grid-cols-5">
-              <Sidebar playlists={playlists} className="hidden lg:block" />
+              {/* <Sidebar playlists={playlists} className="hidden lg:block" /> */}
               <div className="col-span-3 lg:col-span-4 lg:border-l">
                 <div className="h-full px-4 py-6 lg:px-8">
                   <Tabs defaultValue="music" className="h-full space-y-6">
@@ -57,13 +76,23 @@ export default function MusicPage() {
                         <TabsTrigger value="music" className="relative">
                           Music
                         </TabsTrigger>
-                        
+
                       </TabsList>
                       <div className="ml-auto mr-4">
                         <Button>
-                          <PlusCircledIcon className="mr-2 h-4 w-4" />
-                          Add Cart
+                          {/* <PlusCircledIcon className="mr-2 h-4 w-4" /> */}
+                          {address ? (address) : ("loading...")}
                         </Button>
+                        {address ? (<Avatar.Root className=" ml-8 bg-blackA1 inline-flex h-[45px] w-[45px] select-none items-center justify-center overflow-hidden rounded-full align-middle" onClick={()=>{
+                          router.push("/profile")
+                        }}>
+                          <Avatar.Image
+                            className="h-full w-full rounded-[inherit] object-cover"
+                            src={photoURL || ""}
+                            alt="Colm Tuite"
+                          />
+
+                        </Avatar.Root>) : (null)}
                       </div>
                     </div>
                     <TabsContent

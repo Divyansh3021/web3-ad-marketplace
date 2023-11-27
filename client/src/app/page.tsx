@@ -23,9 +23,65 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
-export default function Home() {
+import {
+  ParticleAuthModule,
+  ParticleProvider,
+} from "@biconomy/particle-auth";
 
+import { useState } from 'react';
+
+import { BiconomySmartAccountV2, DEFAULT_ENTRYPOINT_ADDRESS } from "@biconomy/account"
+import { ethers  } from 'ethers'
+import { ChainId } from "@biconomy/core-types"
+
+import { ECDSAOwnershipValidationModule, DEFAULT_ECDSA_OWNERSHIP_MODULE } from "@biconomy/modules";
+import { useRouter } from 'next/navigation'
+import { particle, bundler, paymaster } from "../../biconomyAuth/authDetails"
+export default function Home() {
+  const [address, setAddress] = useState<string>("")
+  const [loading, setLoading] = useState<boolean>(false);
+  const [smartAccount, setSmartAccount] = useState<BiconomySmartAccountV2 | null>(null);
+  const [provider, setProvider] = useState<ethers.providers.Provider | null>(null)
   const { setTheme } = useTheme()
+
+const router=useRouter();
+  const connect = async () => {
+    try {
+      const userInfo = await particle.auth.login({
+        supportAuthTypes: 'google,twitter'
+      });
+      console.log("Logged in user:", userInfo);
+      
+      const particleProvider = new ParticleProvider(particle.auth );
+      const web3Provider = new ethers.providers.Web3Provider(
+        particleProvider,
+        "any"
+      );
+      setProvider(web3Provider)
+
+      const module = await ECDSAOwnershipValidationModule.create({
+      signer: web3Provider.getSigner(),
+      moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE
+      })
+
+       let biconomySmartAccount = await BiconomySmartAccountV2.create({
+        chainId: ChainId.POLYGON_MUMBAI,
+        bundler: bundler, 
+        paymaster: paymaster,
+        entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
+        defaultValidationModule: module,
+        activeValidationModule: module
+      })
+      const ADDRESS=await biconomySmartAccount.getAccountAddress()
+      setAddress( await biconomySmartAccount.getAccountAddress())
+      setSmartAccount(biconomySmartAccount)
+      setLoading(false)
+      console.log(address);
+       router.push(`/home?address=${ADDRESS}`);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <main className="flex min-h-screen flex-col items-center  ">
@@ -52,7 +108,7 @@ export default function Home() {
   </DropdownMenu>
   </div>
 <div >
-  <Tabs defaultValue="account" className="w-[400px]">
+  {/* <Tabs defaultValue="account" className="w-[400px]">
       <TabsList className="grid w-full grid-cols-2">
         <TabsTrigger value="account">Account</TabsTrigger>
         <TabsTrigger value="password">Password</TabsTrigger>
@@ -103,7 +159,9 @@ export default function Home() {
           </CardFooter>
         </Card>
       </TabsContent>
-    </Tabs>
+    </Tabs> */}
+    <Button onClick={connect}>Connect</Button> 
+    {address && <h2>Smart Account: {address}</h2>}
     </div>
   </main>
   )

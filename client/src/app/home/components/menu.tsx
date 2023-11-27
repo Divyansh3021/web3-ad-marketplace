@@ -21,7 +21,7 @@ export function Menu() {
       <Menubar className="rounded-none border-b border-none px-2 lg:px-4">
       <MenubarMenu>
       <Link 
-          href="/home" >  <MenubarTrigger className="font-bold text-lg cursor-pointer"  >Music</MenubarTrigger></Link>
+          href="/home" >  <MenubarTrigger className="font-bold text-lg cursor-pointer"  >Brevet</MenubarTrigger></Link>
       </MenubarMenu>
       <MenubarMenu>
       <Link

@@ -55,7 +55,7 @@ export default function MusicPage() {
                     <div className="space-between flex items-center">
                       <TabsList>
                         <TabsTrigger value="music" className="relative">
-                          Music
+                          Brevet
                         </TabsTrigger>
                         
                       </TabsList>

@@ -104,53 +104,6 @@ export function ProfileForm() {
             </FormItem>
           )}
         />
-        {/* <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select a verified email to display" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <SelectItem value="m@example.com">m@example.com</SelectItem>
-                  <SelectItem value="m@google.com">m@google.com</SelectItem>
-                  <SelectItem value="m@support.com">m@support.com</SelectItem>
-                </SelectContent>
-              </Select>
-              <FormDescription>
-                You can manage verified email addresses in your{" "}
-                <Link href="/examples/forms">email settings</Link>.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        /> */}
-        {/* <FormField
-          control={form.control}
-          name="bio"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Bio</FormLabel>
-              <FormControl>
-                <Textarea
-                  placeholder="Tell us a little bit about yourself"
-                  className="resize-none"
-                  {...field}
-                />
-              </FormControl>
-              <FormDescription>
-                You can <span>@mention</span> other users and organizations to
-                link to them.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        /> */}
         <div>
         <Alert>
       <Terminal className="h-4 w-4" />
@@ -160,13 +113,12 @@ export function ProfileForm() {
       </AlertDescription>
     </Alert>
         </div>
-       <div className="flex ">
-       <Button type="submit" className="mr-3">Update profile</Button>
-        <Button type="button" >Create New Ad</Button>
+       <div className="flex">
+        <Button type="submit" className="mr-3">Update profile</Button>
+        <Button type="button">Create New Ad</Button>
         <Button type="button" className="mx-3">Run Campaign</Button>
+        <button type="button" id="my-elem">New Button</button>    
        </div>
-       
-
       </form>
     </Form>
   )
